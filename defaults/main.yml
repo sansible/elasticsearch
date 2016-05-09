@@ -1,0 +1,46 @@
+---
+
+elasticsearch:
+  bootstrap_mlockall: true
+  cluster_name: default_es_cluster
+  disable_dynamic_scripting: false
+  discovery_zen_ping_multicast_enabled: false
+  discovery_zen_ping_unicast_hosts: localhost
+  # add any extra config for elasticsearch.yml here
+  extra_config: []
+  family: 1.4
+  port: 9200
+  version: 1.4.1
+
+  index:
+    number_of_shards: 5
+    number_of_replicas: 1
+
+  packages:
+    - dstat
+
+  paths:
+    data: /var/lib/elasticsearch
+    logs: /var/log/elasticsearch
+    configuration: /etc/elasticsearch
+
+  plugins:
+    - plugin_name: mobz/elasticsearch-head
+      plugin_dir:  head
+    - plugin_name: royrusso/elasticsearch-HQ
+      plugin_dir:  HQ
+    - plugin_name: elasticsearch/elasticsearch-lang-mvel/1.4.1
+      plugin_dir: lang-mvel
+
+  plugin_config:
+    aws:
+      enabled: false
+      cloud_aws_region: changeme
+      discovery:
+        enabled: false
+        ec2_tags: {}
+        ec2_ping_timeout: "30s"
+      repository:
+        enabled: false
+        bucket: changeme
+        region: changeme

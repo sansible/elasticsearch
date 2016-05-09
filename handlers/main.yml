@@ -1,0 +1,25 @@
+---
+
+- name: reload elasticsearch
+  become: yes
+  service:
+    name: elasticsearch
+    state: reloaded
+
+- name: restart elasticsearch
+  become: yes
+  service:
+    name: elasticsearch
+    state: restarted
+
+- name: start elasticsearch
+  become: yes
+  service:
+    name: elasticsearch
+    state: started
+
+- name: stop elasticsearch
+  become: yes
+  service:
+    name: elasticsearch
+    state: stopped

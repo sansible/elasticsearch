@@ -1,0 +1,19 @@
+# {{ ansible_managed }}
+# file: elasticsearch/templates/elasticsearch.default.j2
+#
+
+CONF_DIR={{ elasticsearch.paths.configuration }}
+CONF_FILE={{ elasticsearch.paths.configuration }}/elasticsearch.yml
+DATA_DIR={{ elasticsearch.paths.data }}
+ES_HOME=/usr/share/elasticsearch
+ES_USER=elasticsearch
+LOG_DIR={{ elasticsearch.paths.logs }}
+MAX_MAP_COUNT=262144
+MAX_OPEN_FILES=65535
+WORK_DIR=/tmp/elasticsearch
+
+ES_MIN_MEM={{ ansible_memtotal_mb / 2}}
+ES_MAX_MEM={{ ansible_memtotal_mb / 2}}
+ES_HEAP_SIZE={{ (ansible_memtotal_mb / 2) | int }}m
+
+export ES_USE_IPV4=true
