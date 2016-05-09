@@ -10,6 +10,8 @@ Develop: [![Build Status](https://travis-ci.org/sansible/elasticsearch.svg?branc
 
 This roles installs Elasticsearch.
 
+For more information on Elasticsearch please visit [elastic elasticsearch](https://www.elastic.co/products/elasticsearch).
+
 
 
 
