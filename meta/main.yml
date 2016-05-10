@@ -1,6 +1,12 @@
 ---
 
-dependencies: [ ]
+dependencies:
+  - role: sansible.java
+    version: v1.0
+    java:
+      version: "{{ elasticsearch.java.version }}"
+    tags:
+      - build
 
 galaxy_info:
   author: "David Reed"

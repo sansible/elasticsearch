@@ -16,6 +16,9 @@ elasticsearch:
     number_of_shards: 5
     number_of_replicas: 1
 
+  java:
+    version: 8
+
   packages:
     - dstat
 

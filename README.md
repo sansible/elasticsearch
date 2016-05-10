@@ -31,7 +31,7 @@ hash_behaviour = merge
 ## Installation and Dependencies
 
 To install run `ansible-galaxy install sansible.elasticsearch` or add this to your
-`roles.yml`
+`roles.yml` and `sansible.java` for installing java.
 
 ```YAML
 - name: sansible.elasticsearch
