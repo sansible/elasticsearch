@@ -16,9 +16,15 @@ integration_test: clean integration_test_deps vagrant_up clean
 test_deps:
 	rm -rf tests/vagrant/sansible.*
 	ln -s ../.. tests/vagrant/sansible.elasticsearch
-	
+	ansible-galaxy install --force -p tests/vagrant -r tests/vagrant/local_requirements.yml
+
 integration_test_deps:
-	echo "noop"
+	sed -i.bak \
+		-E 's/(.*)version: (.*)/\1version: origin\/$(BRANCH)/' \
+		tests/vagrant/integration_requirements.yml
+	rm -rf tests/vagrant/sansible.*
+	ansible-galaxy install -p tests/vagrant -r tests/vagrant/integration_requirements.yml
+	mv tests/vagrant/integration_requirements.yml.bak tests/vagrant/integration_requirements.yml
 
 vagrant_up:
 	@cd tests/vagrant; \
