@@ -12,8 +12,8 @@ MAX_MAP_COUNT=262144
 MAX_OPEN_FILES=65535
 WORK_DIR=/tmp/elasticsearch
 
-ES_MIN_MEM={{ ansible_memtotal_mb / 2}}
-ES_MAX_MEM={{ ansible_memtotal_mb / 2}}
-ES_HEAP_SIZE={{ (ansible_memtotal_mb / 2) | int }}m
+ES_MIN_MEM={{ elasticsearch.java_heap_size }}
+ES_MAX_MEM={{ elasticsearch.java_heap_size }}
+ES_HEAP_SIZE={{ elasticsearch.java_heap_size }}m
 
 export ES_USE_IPV4=true
