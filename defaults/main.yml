@@ -9,6 +9,7 @@ elasticsearch:
   # add any extra config for elasticsearch.yml here
   extra_config: []
   family: 1.4
+  java_heap_size: "{{ (ansible_memtotal_mb / 2) | int }}"
   port: 9200
   version: 1.4.1
 
