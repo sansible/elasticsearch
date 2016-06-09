@@ -38,7 +38,7 @@ gateway.recover_after_nodes: {{ gateway_recover_after_nodes  }}
 {% if gateway_recover_after_time is defined %}
 gateway.recover_after_time: {{ gateway_recover_after_time }}
 {% endif %}
-{% if elasticsearch.disable_dynamic_scripting is defined %}
+{% if elasticsearch.disable_dynamic_scripting %}
 script.disable_dynamic: {{ elasticsearch.disable_dynamic_scripting }}
 {% endif %}
 
