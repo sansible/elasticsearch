@@ -27,7 +27,7 @@
   with_items: elasticsearch.packages
   notify: restart elasticsearch
 
-- name: Install Elasticsearch plugins
+- name: Install Elasticsearch 1.x plugins
   become: yes
   command: "/usr/share/elasticsearch/bin/plugin -install {{ item.plugin_name }}"
   args:
@@ -36,7 +36,19 @@
   environment:
     JAVA_HOME: /usr/share/java
   with_items: elasticsearch.plugins
-  
+  when: elasticsearch.family != '2.x'
+
+- name: Install Elasticsearch 2.x plugins
+  become: yes
+  command: "/usr/share/elasticsearch/bin/plugin install {{ item.plugin_name }}"
+  args:
+    chdir: /usr/share/elasticsearch/
+    creates: "/usr/share/elasticsearch/plugins/{{ item.plugin_dir }}"
+  environment:
+    JAVA_HOME: /usr/share/java
+  with_items: elasticsearch.plugins
+  when: elasticsearch.family == '2.x'
+
 - name: Ensure Elasticsearch service is enabled
   become: yes
   service:
