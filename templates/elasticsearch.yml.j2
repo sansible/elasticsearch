@@ -57,12 +57,6 @@ discovery.ec2.tag.{{ tag }}: {{ value }}
 
     {% endfor %}
   {% endif %}
-  {% if elasticsearch.plugin_config.aws.repository.enabled %}
-
-repositories.s3.bucket: "{{ elasticsearch.plugin_config.aws.repository.bucket }}"
-repositories.s3.region: "{{ elasticsearch.plugin_config.aws.repository.region }}"
-
-  {% endif %}
 {% endif %}
 
 {% for extra_config in elasticsearch.extra_config %}

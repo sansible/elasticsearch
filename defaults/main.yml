@@ -9,8 +9,10 @@ elasticsearch:
   # add any extra config for elasticsearch.yml here
   extra_config: []
   family: 1.4
+  group: elasticsearch
   java_heap_size: "{{ (ansible_memtotal_mb / 2) | int }}"
   port: 9200
+  user: elasticsearch
   version: 1.4.1
 
   index:
@@ -21,6 +23,7 @@ elasticsearch:
     version: 8
 
   packages:
+    - curl
     - dstat
 
   paths:
@@ -44,7 +47,8 @@ elasticsearch:
         enabled: false
         ec2_tags: {}
         ec2_ping_timeout: "30s"
-      repository:
+      s3_backup:
         enabled: false
+        base_path: snapshots
         bucket: changeme
         region: changeme

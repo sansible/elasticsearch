@@ -1,5 +1,5 @@
 ---
-    
+
 - name: Add Elastic gpg key
   become: yes
   apt_key:
@@ -48,6 +48,16 @@
     JAVA_HOME: /usr/share/java
   with_items: elasticsearch.plugins
   when: elasticsearch.family == '2.x'
+
+- name: Ensure some required directories
+  become: yes
+  file:
+    group: "{{ elasticsearch.group }}"
+    owner: "{{ elasticsearch.user }}"
+    path: "/home/{{ elasticsearch.user }}/{{ item }}"
+    state: directory
+  with_items:
+    - bin
 
 - name: Ensure Elasticsearch service is enabled
   become: yes
