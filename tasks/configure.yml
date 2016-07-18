@@ -17,7 +17,7 @@
     backup: yes
   notify:
     - restart elasticsearch
-    
+
 - name: Configure elasticsearch
   become: yes
   template:
@@ -26,6 +26,16 @@
     backup: true
   notify:
     - restart elasticsearch
+
+- name: Create AWS Snapshot script
+  become: yes
+  template:
+    dest: "/home/{{ elasticsearch.user }}/bin/aws_s3_snapshot.sh"
+    group: "{{ elasticsearch.user }}"
+    mode: 0750
+    owner: "{{ elasticsearch.user }}"
+    src: aws_s3_snapshot.sh.j2
+  when: elasticsearch.plugin_config.aws.s3_backup.enabled
 
 - name: Ensure Elasticsearch service is started
   become: yes

@@ -1,0 +1,49 @@
+#!/bin/bash
+set -o nounset
+set -o errexit
+
+export PATH=$PATH:/usr/sbin:/sbin:/usr/bin:/bin:/usr/local/bin/
+
+function info { echo -e "$( date +%T )" "\033[1;33m  $1\033[0m"; }
+function ok { echo -e "$( date +%T )" "\033[1;32m  $1\033[0m"; }
+function error { echo -e "$( date +%T )" "\033[1;31m  Error: $1\033[0m"; }
+function die { error "$1"; exit 1; }
+
+function main {
+	AWS_DEFAULT_REGION="{{ elasticsearch.plugin_config.aws.cloud_aws_region }}"
+	SNAPSHOP_BUCKET="{{ elasticsearch.plugin_config.aws.s3_backup.bucket }}"
+	SNAPSHOP_BASE_PATH="{{ elasticsearch.plugin_config.aws.s3_backup.base_path }}"
+	SERVER="http://localhost:{{ elasticsearch.port }}"
+
+	snapshot_repo_data="{
+		\"type\": \"s3\",
+		\"settings\": {
+			\"bucket\": \"${SNAPSHOP_BUCKET}\",
+			\"region\": \"${AWS_DEFAULT_REGION}\",
+			\"base_path\": \"${SNAPSHOP_BASE_PATH}\"
+		}
+	}"
+	response="$( echo "${snapshot_repo_data}" | curl -XPUT \
+		-d @- \
+		${SERVER}/_snapshot/${SNAPSHOP_BUCKET} )"
+
+	if [[ $response == *"acknowledged"* ]]; then
+		ok "Snapshot repo ready"
+	else
+		echo "${response}"
+		die "Error creating snapshot repo"
+	fi
+
+	snapshot_name="snapshop-all-$( date +%y-%m-%d-%s )"
+
+	info "Creating snapshop ${snapshot_name}"
+	response="$( curl -XPUT ${SERVER}/_snapshot/${SNAPSHOP_BUCKET}/${snapshot_name}?wait_for_completion=true )"
+	if [[ $response == *"\"failed\":0"* ]]; then
+		ok "Snapshot ready"
+	else
+		echo "${response}"
+		die "Error creating snapshot"
+	fi
+}
+
+main "$@"

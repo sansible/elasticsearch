@@ -1,6 +1,15 @@
 ---
 
 dependencies:
+  - role: sansible.users_and_groups
+    version: v1.1
+    users_and_groups:
+      users:
+        - name: "{{ elasticsearch.user }}"
+          gecos: Elasticsearch user
+    tags:
+      - build
+
   - role: sansible.java
     version: v1.0
     java:
