@@ -24,7 +24,7 @@
   apt:
     name: "{{ item }}"
     state: installed
-  with_items: elasticsearch.packages
+  with_items: "{{ elasticsearch.packages }}"
   notify: restart elasticsearch
 
 - name: Install Elasticsearch 1.x plugins
@@ -35,7 +35,7 @@
     creates: "/usr/share/elasticsearch/plugins/{{ item.plugin_dir }}"
   environment:
     JAVA_HOME: /usr/share/java
-  with_items: elasticsearch.plugins
+  with_items: "{{ elasticsearch.plugins }}"
   when: elasticsearch.family != '2.x'
 
 - name: Install Elasticsearch 2.x plugins
@@ -46,7 +46,7 @@
     creates: "/usr/share/elasticsearch/plugins/{{ item.plugin_dir }}"
   environment:
     JAVA_HOME: /usr/share/java
-  with_items: elasticsearch.plugins
+  with_items: "{{ elasticsearch.plugins }}"
   when: elasticsearch.family == '2.x'
 
 - name: Ensure some required directories

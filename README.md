@@ -95,3 +95,11 @@ With AWS EC2 plugin:
             Stack: "services-dev-elasticsearch-v2"
           ec2_ping_timeout: "30s"
 ```
+
+
+
+
+## Test
+
+To run the test locally, run `make test`. This requires `ansible-lint` to be present. You can install `ansible-lint` with `pip install ansible-lint`.
+You may consider using a virtual python environment (i.e. use `virtualenv`). Review the `Makefile` to discover the other related `make` commands.
