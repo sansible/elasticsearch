@@ -11,6 +11,15 @@ path.logs: {{ elasticsearch.paths.logs }}
 index.number_of_shards: {{ elasticsearch.index.number_of_shards }}
 index.number_of_replicas: {{ elasticsearch.index.number_of_replicas }}
 
+{% if elasticsearch.family is defined %}
+{% if elasticsearch.family == "2.x" %}
+{% if elasticsearch.bind_host is defined %}
+network.bind_host: {{ elasticsearch.bind_host }}
+{% endif %}
+network.bind_host: 0.0.0.0
+{% endif %}
+{% endif %}
+
 {% if elasticsearch.bootstrap_mlockall is defined %}
 bootstrap.mlockall: {{ elasticsearch.bootstrap_mlockall }}
 {% endif %}
