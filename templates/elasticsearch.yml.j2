@@ -13,10 +13,8 @@ index.number_of_replicas: {{ elasticsearch.index.number_of_replicas }}
 
 {% if elasticsearch.family is defined %}
 {% if elasticsearch.family == "2.x" %}
-{% if elasticsearch.network_host is defined %}
-network.host: {{ elasticsearch.network_host }}
-{% endif %}
-network.host: "_site:ipv4_"
+network.bind_host:    "0.0.0.0"
+network.publish_host: "_site:ipv4_"
 {% endif %}
 {% endif %}
 
