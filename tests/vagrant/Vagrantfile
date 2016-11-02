@@ -6,17 +6,23 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-	config.vm.box = "ubuntu/trusty64"
+	config.vm.box = "#{ENV['VAGRANT_BOX']}"
 	config.vm.box_check_update = false
 
 	config.ssh.forward_agent = true
 
 	config.vm.provider :virtualbox do |vb|
-		vb.customize ["modifyvm", :id, "--memory", 1024]
+		vb.customize ["modifyvm", :id, "--memory", 2048]
 		vb.customize ["modifyvm", :id, "--cpus", 1]
 
 		vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
 		vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+	end
+
+	# setup Python 2.7 for Ansible
+	config.vm.provision "shell" do |shell|
+		shell.inline = "apt-get install $1 -y && ln -fs /usr/bin/$1 /usr/bin/python"
+		shell.args   = "python2.7"
 	end
 
 	# Test "build" tag

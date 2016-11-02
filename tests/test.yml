@@ -3,6 +3,9 @@
 - name: Test Elasticsearch role
   hosts: all
 
+  vars_files:
+    - "./vars_elasticsearch_{{ lookup('env', 'ES_VARS') | default('default', true) }}.yml"
+
   pre_tasks:
     - name: Update apt
       become: yes

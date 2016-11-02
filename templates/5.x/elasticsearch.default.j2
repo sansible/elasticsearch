@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+CONF_DIR={{ elasticsearch.paths.configuration }}
+DATA_DIR={{ elasticsearch.paths.data }}
+ES_GROUP={{ elasticsearch.user }}
+ES_HOME=/usr/share/elasticsearch
+ES_JAVA_OPTS="-Xms{{ elasticsearch.java_heap_size }}m -Xmx{{ elasticsearch.java_heap_size }}m"
+ES_STARTUP_SLEEP_TIME=5
+ES_USER={{ elasticsearch.user }}
+#JAVA_HOME=
+LOG_DIR={{ elasticsearch.paths.logs }}
+#MAX_LOCKED_MEMORY=unlimited
+MAX_MAP_COUNT=262144
+MAX_OPEN_FILES={{ elasticsearch.limits.nofile_hard }}
+PID_DIR={{ elasticsearch.paths.pid }}
+RESTART_ON_UPGRADE=true
+WORK_DIR=/tmp/elasticsearch

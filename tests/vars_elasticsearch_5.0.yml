@@ -1,0 +1,6 @@
+---
+
+elasticsearch:
+  version: 5.0.0
+  family: 5.x
+  plugins: [ ]

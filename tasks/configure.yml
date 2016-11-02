@@ -1,27 +1,35 @@
 ---
 
-- name: Setup environment variables
-  become: yes
-  template:
-    src: elasticsearch.default.j2
-    dest: /etc/default/elasticsearch
-    backup: true
-  notify:
-    - restart elasticsearch
-
 - name: Raise open file limits for elasticsearch and allow memory locking
   become: yes
-  copy:
+  template:
     src: 10-elasticsearch.conf
     dest: /etc/security/limits.d/10-elasticsearch.conf
     backup: yes
   notify:
     - restart elasticsearch
 
+- name: Ensure sysctl.conf settigns
+  become: yes
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: "{{ elasticsearch.sysctl }}"
+
+- name: Setup environment variables
+  become: yes
+  template:
+    src: "{{ elasticsearch.family }}/elasticsearch.default.j2"
+    dest: /etc/default/elasticsearch
+    backup: true
+  notify:
+    - restart elasticsearch
+
 - name: Configure elasticsearch
   become: yes
   template:
-    src: elasticsearch.yml.j2
+    src: "elasticsearch.yml.j2"
     dest: /etc/elasticsearch/elasticsearch.yml
     backup: true
   notify:
@@ -35,7 +43,7 @@
     mode: 0750
     owner: "{{ elasticsearch.user }}"
     src: aws_s3_snapshot.sh.j2
-  when: elasticsearch.plugin_config.aws.s3_backup.enabled
+  when: elasticsearch.s3_backup.enabled
 
 - name: Ensure Elasticsearch service is started
   become: yes

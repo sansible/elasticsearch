@@ -1,25 +1,6 @@
 ---
 
-- name: Add Elastic gpg key
-  become: yes
-  apt_key:
-    url: https://packages.elastic.co/GPG-KEY-elasticsearch
-    state: present
-
-- name: Install Elasticsearch repo
-  become: yes
-  apt_repository:
-    repo: 'deb http://packages.elasticsearch.org/elasticsearch/{{ elasticsearch.family }}/debian stable main'
-    state: present
-
-- name: Install Elasticsearch
-  become: yes
-  apt:
-    name: "elasticsearch={{ elasticsearch.version }}"
-    state: installed
-  notify: restart elasticsearch
-
-- name: Install Elasticsearch packages
+- name: Install Elasticsearch extra packages
   become: yes
   apt:
     name: "{{ item }}"
@@ -27,27 +8,17 @@
   with_items: "{{ elasticsearch.packages }}"
   notify: restart elasticsearch
 
-- name: Install Elasticsearch 1.x plugins
-  become: yes
-  command: "/usr/share/elasticsearch/bin/plugin -install {{ item.plugin_name }}"
-  args:
-    chdir: /usr/share/elasticsearch/
-    creates: "/usr/share/elasticsearch/plugins/{{ item.plugin_dir }}"
-  environment:
-    JAVA_HOME: /usr/share/java
-  with_items: "{{ elasticsearch.plugins }}"
-  when: elasticsearch.family != '2.x'
+- name: Install 1.x Family
+  include: install/1.x.yml
+  when: elasticsearch.family == '1.x'
 
-- name: Install Elasticsearch 2.x plugins
-  become: yes
-  command: "/usr/share/elasticsearch/bin/plugin install {{ item.plugin_name }}"
-  args:
-    chdir: /usr/share/elasticsearch/
-    creates: "/usr/share/elasticsearch/plugins/{{ item.plugin_dir }}"
-  environment:
-    JAVA_HOME: /usr/share/java
-  with_items: "{{ elasticsearch.plugins }}"
+- name: Install 2.x Family
+  include: install/2.x.yml
   when: elasticsearch.family == '2.x'
+
+- name: Install 5.x Family
+  include: install/5.x.yml
+  when: elasticsearch.family == '5.x'
 
 - name: Ensure some required directories
   become: yes
