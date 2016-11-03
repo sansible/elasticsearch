@@ -5,10 +5,10 @@
 CONF_DIR={{ elasticsearch.paths.configuration }}
 DATA_DIR={{ elasticsearch.paths.data }}
 ES_HOME=/usr/share/elasticsearch
-ES_USER=elasticsearch
+ES_USER={{ elasticsearch.user }}
 LOG_DIR={{ elasticsearch.paths.logs }}
 MAX_MAP_COUNT=262144
-MAX_OPEN_FILES=65535
+MAX_OPEN_FILES={{ elasticsearch.limits.nofile_hard }}
 WORK_DIR=/tmp/elasticsearch
 
 ES_MIN_MEM={{ elasticsearch.java_heap_size }}

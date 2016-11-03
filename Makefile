@@ -1,6 +1,11 @@
+include .make
+VAGRANT_BOX ?= ubuntu/trusty64
+ES_VARS ?=
 
 .DEFAULT_GOAL := help
 .PHONY: help
+
+export VAGRANT_BOX ES_VARS
 
 all: test vagrant_halt clean
 
@@ -45,7 +50,10 @@ clean:
 help:
 	@awk -v skip=1 \
 		'/^##/ { sub(/^[#[:blank:]]*/, "", $$0); doc_h=$$0; doc=""; skip=0; next } \
-		 skip  { next } \
-		 /^#/  { doc=doc "\n" substr($$0, 2); next } \
-		 /:/   { sub(/:.*/, "", $$0); printf "\033[34m%-30s\033[0m\033[1m%s\033[0m %s\n\n", $$0, doc_h, doc; skip=1 }' \
+		skip { next } \
+		/^#/ { doc=doc "\n" substr($$0, 2); next } \
+		/:/ { sub(/:.*/, "", $$0); printf "\033[34m%-30s\033[0m\033[1m%s\033[0m %s\n\n", $$0, doc_h, doc; skip=1 }' \
 		$(MAKEFILE_LIST)
+
+.make:
+	echo "" > .make

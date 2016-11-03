@@ -1,0 +1,30 @@
+---
+
+- name: Add Elastic gpg key
+  become: yes
+  apt_key:
+    url: https://packages.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Install Elasticsearch repo
+  become: yes
+  apt_repository:
+    repo: "deb http://packages.elasticsearch.org/elasticsearch/{{ elasticsearch.family }}/debian stable main"
+    state: present
+
+- name: Install Elasticsearch
+  become: yes
+  apt:
+    name: "elasticsearch={{ elasticsearch.version }}"
+    state: installed
+  notify: restart elasticsearch
+
+- name: Install Elasticsearch 2.x plugins
+  become: yes
+  command: "/usr/share/elasticsearch/bin/plugin install {{ item.plugin_name }}"
+  args:
+    chdir: /usr/share/elasticsearch/
+    creates: "/usr/share/elasticsearch/plugins/{{ item.plugin_dir }}"
+  environment:
+    JAVA_HOME: /usr/share/java
+  with_items: "{{ elasticsearch.plugins }}"

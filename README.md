@@ -9,6 +9,7 @@ Develop: [![Build Status](https://travis-ci.org/sansible/elasticsearch.svg?branc
 * [Examples](#examples)
 
 This roles installs Elasticsearch.
+The default version is 2.4.1.
 
 For more information on Elasticsearch please visit [elastic elasticsearch](https://www.elastic.co/products/elasticsearch).
 
@@ -35,7 +36,7 @@ To install run `ansible-galaxy install sansible.elasticsearch` or add this to yo
 
 ```YAML
 - name: sansible.elasticsearch
-  version: v1.0
+  version: v1.2
 ```
 
 and run `ansible-galaxy install -p ./roles -r roles.yml`
@@ -55,7 +56,7 @@ This role uses two tags: **build** and **configure**
 
 ## Examples
 
-To install:
+To install default version with default settings:
 
 ```YAML
 - name: Install and configure ElasticSearch
@@ -63,6 +64,22 @@ To install:
 
   roles:
     - role: sansible.elasticsearch
+```
+
+To install v5 with x-pack:
+
+```YAML
+- name: Install and configure ElasticSearch
+  hosts: "somehost"
+
+  roles:
+    - role: sansible.elasticsearch
+      elasticsearch:
+        version: 5.0.0
+        family: 5.x
+        plugins:
+          - plugin_name: x-pack
+            plugin_dir: x-pack
 ```
 
 With AWS EC2 plugin:
@@ -73,27 +90,25 @@ With AWS EC2 plugin:
 
   roles:
     - role: sansible.elasticsearch
-  elasticsearch:
-    discovery_zen_ping_multicast_enabled: false
-    index:
-      number_of_shards: 6
-      number_of_replicas: 2
-    plugins:
-      - plugin_name: mobz/elasticsearch-head
-        plugin_dir:  head
-      - plugin_name: royrusso/elasticsearch-HQ
-        plugin_dir:  HQ
-      - plugin_name: elasticsearch/elasticsearch-cloud-aws/2.4.2
-        plugin_dir: cloud-aws
-    plugin_config:
-      aws:
-        enabled: true
-        cloud_aws_region: "eu-west-1"
-        discovery:
-          enabled: true
-          ec2_tags:
-            Stack: "services-dev-elasticsearch-v2"
-          ec2_ping_timeout: "30s"
+      elasticsearch:
+        config:
+          bootstrap.mlockall: "true"
+          index.number_of_shards: 6
+          index.number_of_replicas: 2
+          discovery.zen.ping.multicast.enabled: "false"
+          script.disable_dynamic: "true"
+          cloud.aws.region: "true"
+          cloud.node.auto_attributes: "true"
+          discovery.type: ec2
+          discovery.ec2.ping_timeout: "30s"
+          discovery.ec2.tag.Stack: services-dev-elasticsearch-v2
+        plugins:
+          - plugin_name: mobz/elasticsearch-head
+            plugin_dir:  head
+          - plugin_name: royrusso/elasticsearch-HQ
+            plugin_dir:  HQ
+          - plugin_name: cloud-aws
+            plugin_dir: cloud-aws
 ```
 
 

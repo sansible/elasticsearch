@@ -1,26 +1,26 @@
 ---
 
 elasticsearch:
-  bootstrap_mlockall: true
-  cluster_name: default_es_cluster
-  disable_dynamic_scripting: false
-  discovery_zen_ping_multicast_enabled: false
-  discovery_zen_ping_unicast_hosts: localhost
   # add any extra config for elasticsearch.yml here
-  extra_config: []
-  family: 1.4
+  family: 2.x
   group: elasticsearch
   java_heap_size: "{{ (ansible_memtotal_mb / 2) | int }}"
   port: 9200
   user: elasticsearch
-  version: 1.4.1
+  version: 2.4.1
 
-  index:
-    number_of_shards: 5
-    number_of_replicas: 1
+  config:
+    cluster.name: default_es_cluster
+    node.name: "{{ ansible_hostname }}"
+    path.data: /var/lib/elasticsearch
+    path.logs: /var/log/elasticsearch
 
   java:
     version: 8
+
+  limits:
+    nofile_soft: 65535
+    nofile_hard: 65535
 
   packages:
     - curl
@@ -30,25 +30,20 @@ elasticsearch:
     data: /var/lib/elasticsearch
     logs: /var/log/elasticsearch
     configuration: /etc/elasticsearch
+    pid: /var/run/elasticsearch
 
   plugins:
     - plugin_name: mobz/elasticsearch-head
-      plugin_dir:  head
+      plugin_dir: head
     - plugin_name: royrusso/elasticsearch-HQ
-      plugin_dir:  HQ
-    - plugin_name: elasticsearch/elasticsearch-lang-mvel/1.4.1
-      plugin_dir: lang-mvel
+      plugin_dir: hq
 
-  plugin_config:
-    aws:
-      enabled: false
-      cloud_aws_region: changeme
-      discovery:
-        enabled: false
-        ec2_tags: {}
-        ec2_ping_timeout: "30s"
-      s3_backup:
-        enabled: false
-        base_path: snapshots
-        bucket: changeme
-        region: changeme
+  s3_backup:
+    enabled: false
+    base_path: snapshots
+    bucket: changeme
+    region: changeme
+
+  sysctl:
+    - name: vm.max_map_count
+      value: 262144

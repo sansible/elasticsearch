@@ -1,0 +1,10 @@
+---
+
+elasticsearch:
+  version: 1.4.1
+  family: 1.x
+  plugins:
+    - plugin_name: mobz/elasticsearch-head
+      plugin_dir: head
+    - plugin_name: royrusso/elasticsearch-HQ
+      plugin_dir: HQ
