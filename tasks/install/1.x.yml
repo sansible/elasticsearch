@@ -32,7 +32,7 @@
   command: "/usr/share/elasticsearch/bin/plugin -install {{ item.plugin_name }}"
   args:
     chdir: /usr/share/elasticsearch/
-    creates: "/usr/share/elasticsearch/plugins/{{ item.plugin_dir }}"
+    creates: "/usr/share/elasticsearch/plugins/{{ item.plugin_dir | default(item.plugin_name) }}"
   environment:
     JAVA_HOME: /usr/share/java
   with_items: "{{ elasticsearch.plugins }}"
