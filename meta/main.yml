@@ -2,11 +2,15 @@
 
 dependencies:
   - role: sansible.users_and_groups
-    version: v1.1
+    version: v1.4
     users_and_groups:
       users:
         - name: "{{ elasticsearch.user }}"
           gecos: Elasticsearch user
+      groups: []
+      sudoers: []
+      whitelist_groups: []
+      authorized_keys_dir:
     tags:
       - build
 
