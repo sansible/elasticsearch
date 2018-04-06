@@ -2,17 +2,19 @@
 # file: elasticsearch/templates/elasticsearch.default.j2
 #
 
-CONF_DIR={{ elasticsearch.paths.configuration }}
-DATA_DIR={{ elasticsearch.paths.data }}
+CONF_DIR={{ sansible_elasticsearch_paths_configuration }}
+DATA_DIR={{ sansible_elasticsearch_paths_data }}
 ES_HOME=/usr/share/elasticsearch
-ES_USER={{ elasticsearch.user }}
-LOG_DIR={{ elasticsearch.paths.logs }}
+ES_USER={{ sansible_elasticsearch_user }}
+LOG_DIR={{ sansible_elasticsearch_paths_logs }}
+{%- if ansible_virtualization_type != 'docker' -%}
 MAX_MAP_COUNT=262144
-MAX_OPEN_FILES={{ elasticsearch.limits.nofile_hard }}
+{%- endif -%}
+MAX_OPEN_FILES={{ sansible_elasticsearch_limits_nofile_hard }}
 WORK_DIR=/tmp/elasticsearch
 
-ES_MIN_MEM={{ elasticsearch.java_heap_size }}
-ES_MAX_MEM={{ elasticsearch.java_heap_size }}
-ES_HEAP_SIZE={{ elasticsearch.java_heap_size }}m
+ES_MIN_MEM={{ sansible_elasticsearch_java_heap_size }}
+ES_MAX_MEM={{ sansible_elasticsearch_java_heap_size }}
+ES_HEAP_SIZE={{ sansible_elasticsearch_java_heap_size }}m
 
 export ES_USE_IPV4=true

@@ -1,3 +1,0 @@
----
-# No vars - use role's defaults
-elasticsearch: { }
