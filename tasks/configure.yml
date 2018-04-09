@@ -15,12 +15,13 @@
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     state: "{{ item.state | default('present') }}"
-  with_items: "{{ elasticsearch.sysctl }}"
+  with_items: "{{ sansible_elasticsearch_sysctl }}"
+  when: ansible_virtualization_type != 'docker'
 
 - name: Setup environment variables
   become: yes
   template:
-    src: "{{ elasticsearch.family }}/elasticsearch.default.j2"
+    src: "{{ sansible_elasticsearch_family }}/elasticsearch.default.j2"
     dest: /etc/default/elasticsearch
     backup: true
   notify:
@@ -38,12 +39,12 @@
 - name: Create AWS Snapshot script
   become: yes
   template:
-    dest: "/home/{{ elasticsearch.user }}/bin/aws_s3_snapshot.sh"
-    group: "{{ elasticsearch.user }}"
+    dest: "/home/{{ sansible_elasticsearch_user }}/bin/aws_s3_snapshot.sh"
+    group: "{{ sansible_elasticsearch_group }}"
     mode: 0750
-    owner: "{{ elasticsearch.user }}"
+    owner: "{{ sansible_elasticsearch_user }}"
     src: aws_s3_snapshot.sh.j2
-  when: elasticsearch.s3_backup.enabled
+  when: sansible_elasticsearch_s3_backup_enabled
 
 - name: Ensure Elasticsearch service is started
   become: yes

@@ -9,13 +9,13 @@
 - name: Install Elasticsearch repo
   become: yes
   apt_repository:
-    repo: "deb https://artifacts.elastic.co/packages/{{ elasticsearch.family }}/apt stable main"
+    repo: "deb https://artifacts.elastic.co/packages/{{ sansible_elasticsearch_family }}/apt stable main"
     state: present
 
 - name: Install Elasticsearch
   become: yes
   apt:
-    name: "elasticsearch={{ elasticsearch.version }}"
+    name: "elasticsearch={{ sansible_elasticsearch_version }}"
     state: installed
   notify: restart elasticsearch
 
@@ -27,4 +27,4 @@
     creates: "/usr/share/elasticsearch/plugins/{{ item.plugin_dir }}"
   environment:
     JAVA_HOME: /usr/share/java
-  with_items: "{{ elasticsearch.plugins }}"
+  with_items: "{{ sansible_elasticsearch_plugins }}"

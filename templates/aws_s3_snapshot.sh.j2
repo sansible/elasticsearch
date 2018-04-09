@@ -10,10 +10,10 @@ function error { echo -e "$( date +%T )" "\033[1;31m  Error: $1\033[0m"; }
 function die { error "$1"; exit 1; }
 
 function main {
-	AWS_DEFAULT_REGION="{{ elasticsearch.s3_backup.region }}"
-	SNAPSHOP_BUCKET="{{ elasticsearch.s3_backup.bucket }}"
-	SNAPSHOP_BASE_PATH="{{ elasticsearch.s3_backup.base_path }}"
-	SERVER="http://localhost:{{ elasticsearch.port }}"
+	AWS_DEFAULT_REGION="{{ sansible_elasticsearch_s3_backup_region }}"
+	SNAPSHOP_BUCKET="{{ sansible_elasticsearch_s3_backup_bucket }}"
+	SNAPSHOP_BASE_PATH="{{ sansible_elasticsearch_s3_backup_base_path }}"
+	SERVER="http://localhost:{{ sansible_elasticsearch_port }}"
 
 	snapshot_repo_data="{
 		\"type\": \"s3\",

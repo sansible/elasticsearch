@@ -1,17 +1,19 @@
 # {{ ansible_managed }}
 
-CONF_DIR={{ elasticsearch.paths.configuration }}
-DATA_DIR={{ elasticsearch.paths.data }}
-ES_GROUP={{ elasticsearch.user }}
+CONF_DIR={{ sansible_elasticsearch_paths_configuration }}
+DATA_DIR={{ sansible_elasticsearch_paths_data }}
+ES_GROUP={{ sansible_elasticsearch_group }}
 ES_HOME=/usr/share/elasticsearch
-ES_JAVA_OPTS="-Xms{{ elasticsearch.java_heap_size }}m -Xmx{{ elasticsearch.java_heap_size }}m"
+ES_JAVA_OPTS="-Xms{{ sansible_elasticsearch_java_heap_size }}m -Xmx{{ sansible_elasticsearch_java_heap_size }}m"
 ES_STARTUP_SLEEP_TIME=5
-ES_USER={{ elasticsearch.user }}
+ES_USER={{ sansible_elasticsearch_user }}
 #JAVA_HOME=
-LOG_DIR={{ elasticsearch.paths.logs }}
+LOG_DIR={{ sansible_elasticsearch_paths_logs }}
 #MAX_LOCKED_MEMORY=unlimited
+{%- if ansible_virtualization_type != 'docker' -%}
 MAX_MAP_COUNT=262144
-MAX_OPEN_FILES={{ elasticsearch.limits.nofile_hard }}
-PID_DIR={{ elasticsearch.paths.pid }}
+{%- endif -%}
+MAX_OPEN_FILES={{ sansible_elasticsearch_limits_nofile_hard }}
+PID_DIR={{ sansible_elasticsearch_paths_pid }}
 RESTART_ON_UPGRADE=true
 WORK_DIR=/tmp/elasticsearch

@@ -3,4 +3,16 @@
 # file: elasticsearch/templates/elasticsearch.yml.j2
 # jinja2:trim_blocks: False
 
-{{ elasticsearch.config | to_nice_yaml }}
+cluster:
+  name: {{ sansible_elasticsearch_config_cluster_name }}
+
+node:
+  name: {{ sansible_elasticsearch_config_node_name }}
+
+path:
+  data: {{ sansible_elasticsearch_config_path_data }}
+  logs: {{ sansible_elasticsearch_config_path_logs }}
+
+{%- if sansible_elasticsearch_additional_config is defined -%}
+{{ sansible_elasticsearch_additional_config | to_nice_yaml }}
+{%- endif -%}

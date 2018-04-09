@@ -1,49 +1,35 @@
 ---
 
-elasticsearch:
-  # add any extra config for elasticsearch.yml here
-  family: 2.x
-  group: elasticsearch
-  java_heap_size: "{{ (ansible_memtotal_mb / 2) | int }}"
-  port: 9200
-  user: elasticsearch
-  version: 2.4.1
-
-  config:
-    cluster.name: default_es_cluster
-    node.name: "{{ ansible_hostname }}"
-    path.data: /var/lib/elasticsearch
-    path.logs: /var/log/elasticsearch
-
-  java:
-    version: 8
-
-  limits:
-    nofile_soft: 65535
-    nofile_hard: 65535
-
-  packages:
-    - curl
-    - dstat
-
-  paths:
-    data: /var/lib/elasticsearch
-    logs: /var/log/elasticsearch
-    configuration: /etc/elasticsearch
-    pid: /var/run/elasticsearch
-
-  plugins:
-    - plugin_name: mobz/elasticsearch-head
-      plugin_dir: head
-    - plugin_name: royrusso/elasticsearch-HQ
-      plugin_dir: hq
-
-  s3_backup:
-    enabled: false
-    base_path: snapshots
-    bucket: changeme
-    region: changeme
-
-  sysctl:
-    - name: vm.max_map_count
-      value: 262144
+sansible_elasticsearch_config_cluster_name: default_es_cluster
+sansible_elasticsearch_config_node_name: "{{ ansible_hostname }}"
+sansible_elasticsearch_config_path_data: /var/lib/elasticsearch
+sansible_elasticsearch_config_path_logs: /var/log/elasticsearch
+sansible_elasticsearch_family: 2.x
+sansible_elasticsearch_group: elasticsearch
+sansible_elasticsearch_java_heap_size: "{{ (ansible_memtotal_mb / 2) | int }}"
+sansible_elasticsearch_java_vendor: openjdk
+sansible_elasticsearch_java_version: 8
+sansible_elasticsearch_limits_nofile_hard: 65535
+sansible_elasticsearch_limits_nofile_soft: 65535
+sansible_elasticsearch_packages:
+  - curl
+  - dstat
+sansible_elasticsearch_paths_configuration: /etc/elasticsearch
+sansible_elasticsearch_paths_data: /var/lib/elasticsearch
+sansible_elasticsearch_paths_logs: /var/log/elasticsearch
+sansible_elasticsearch_paths_pid: /var/run/elasticsearch
+sansible_elasticsearch_plugins:
+  - plugin_name: mobz/elasticsearch-head
+    plugin_dir: head
+#  - plugin_name: ElasticHQ/elasticsearch-HQ
+#    plugin_dir: hq
+sansible_elasticsearch_port: 9200
+sansible_elasticsearch_s3_backup_base_path: snapshots
+sansible_elasticsearch_s3_backup_bucket: changeme
+sansible_elasticsearch_s3_backup_enabled: no
+sansible_elasticsearch_s3_backup_region: changeme
+sansible_elasticsearch_sysctl:
+  - name: vm.max_map_count
+    value: 262144
+sansible_elasticsearch_user: elasticsearch
+sansible_elasticsearch_version: 2.4.1

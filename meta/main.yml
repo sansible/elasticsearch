@@ -1,33 +1,27 @@
 ---
 
-dependencies:
-  - role: sansible.users_and_groups
-    version: v1.1
-    users_and_groups:
-      users:
-        - name: "{{ elasticsearch.user }}"
-          gecos: Elasticsearch user
-    tags:
-      - build
-
-  - role: sansible.java
-    version: v1.0
-    java:
-      version: "{{ elasticsearch.java.version }}"
-    tags:
-      - build
-
 galaxy_info:
-  author:
-    - David Reed
-    - Wojtek Oledzki
   description: "Install Elasticsearch."
   license: MIT
-  min_ansible_version: 1.9
+  min_ansible_version: 2.2
   platforms:
     - name: Ubuntu
       versions:
         - xenial
         - trusty
+        - bionic
   categories:
     - development
+
+dependencies:
+  - role: sansible.users_and_groups
+    sansible_users_and_groups_groups:
+      - name: "{{ sansible_elasticsearch_group }}"
+    sansible_users_and_groups_users:
+      - name: "{{ sansible_elasticsearch_user }}"
+        gecos: Elasticsearch user
+        group: "{{ sansible_elasticsearch_group }}"
+
+  - role: sansible.java
+    sansible_java_vendor: "{{ sansible_elasticsearch_java_vendor }}"
+    sansible_java_version: "{{ sansible_elasticsearch_java_version }}"
