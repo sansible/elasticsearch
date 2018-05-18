@@ -17,4 +17,4 @@ def test_listening(host):
 def test_elasticsearch(host):
     es = host.process.get(user='elastic+', comm='java')
     es_limits = host.file('/proc/%i/limits' % es.pid).content_string
-    assert re.search(r'Max open files\s+65536\s+65536\s+', es_limits)
+    assert re.search(r'Max open files\s+65535\s+65535\s+', es_limits)

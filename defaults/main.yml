@@ -1,5 +1,6 @@
 ---
 
+sansible_elasticsearch_additional_config: ~
 sansible_elasticsearch_config_cluster_name: default_es_cluster
 sansible_elasticsearch_config_node_name: "{{ ansible_hostname }}"
 sansible_elasticsearch_config_path_data: /var/lib/elasticsearch
