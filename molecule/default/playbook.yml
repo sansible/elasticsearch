@@ -15,3 +15,8 @@
 
   roles:
     - role: elasticsearch
+      sansible_elasticsearch_additional_config:
+        bootstrap.mlockall: yes
+        index.number_of_shards: 1
+        index.number_of_replicas: 1
+        script.groovy.sandbox.enabled: yes
