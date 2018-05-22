@@ -1,6 +1,6 @@
 ---
 
-sansible_elasticsearch_additional_config: ~
+sansible_elasticsearch_additional_config: {}
 sansible_elasticsearch_config_cluster_name: default_es_cluster
 sansible_elasticsearch_config_node_name: "{{ ansible_hostname }}"
 sansible_elasticsearch_config_path_data: /var/lib/elasticsearch
@@ -12,6 +12,7 @@ sansible_elasticsearch_java_vendor: openjdk
 sansible_elasticsearch_java_version: 8
 sansible_elasticsearch_limits_nofile_hard: 65535
 sansible_elasticsearch_limits_nofile_soft: 65535
+sansible_elasticsearch_limits_nproc: 32768
 sansible_elasticsearch_packages:
   - curl
   - dstat

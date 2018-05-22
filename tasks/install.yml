@@ -4,21 +4,21 @@
   become: yes
   apt:
     name: "{{ item }}"
-    state: installed
+    state: present
   with_items: "{{ sansible_elasticsearch_packages }}"
   notify: restart elasticsearch
 
 - name: Install 1.x Family
   include: install/1.x.yml
-  when: sansible_elasticsearch_family == '1.x'
+  when: sansible_elasticsearch_family == "1.x"
 
 - name: Install 2.x Family
   include: install/2.x.yml
-  when: sansible_elasticsearch_family == '2.x'
+  when: sansible_elasticsearch_family == "2.x"
 
 - name: Install 5.x Family
   include: install/5.x.yml
-  when: sansible_elasticsearch_family == '5.x'
+  when: sansible_elasticsearch_family == "5.x"
 
 - name: Ensure some required directories
   become: yes

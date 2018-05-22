@@ -16,7 +16,7 @@
     value: "{{ item.value }}"
     state: "{{ item.state | default('present') }}"
   with_items: "{{ sansible_elasticsearch_sysctl }}"
-  when: ansible_virtualization_type != 'docker'
+  when: ansible_virtualization_type != "docker"
 
 - name: Setup environment variables
   become: yes
@@ -44,7 +44,7 @@
     mode: 0750
     owner: "{{ sansible_elasticsearch_user }}"
     src: aws_s3_snapshot.sh.j2
-  when: sansible_elasticsearch_s3_backup_enabled
+  when: sansible_elasticsearch_s3_backup_enabled == true
 
 - name: Ensure Elasticsearch service is started
   become: yes

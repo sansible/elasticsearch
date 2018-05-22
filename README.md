@@ -41,7 +41,7 @@ To install default version with default settings:
 
 ```YAML
 - name: Install and configure ElasticSearch
-  hosts: "somehost"
+  hosts: somehost
 
   roles:
     - role: sansible.elasticsearch
@@ -51,7 +51,7 @@ To install v5 with x-pack:
 
 ```YAML
 - name: Install and configure ElasticSearch
-  hosts: "somehost"
+  hosts: somehost
 
   roles:
     - role: sansible.elasticsearch
@@ -66,20 +66,20 @@ With AWS EC2 plugin:
 
 ```YAML
 - name: Install and configure ElasticSearch
-  hosts: "somehost"
+  hosts: somehost
 
   roles:
     - role: sansible.elasticsearch
       sansible_elasticsearch_additional_config:
-        bootstrap.mlockall: "true"
+        bootstrap.mlockall: yes
         index.number_of_shards: 6
         index.number_of_replicas: 2
-        discovery.zen.ping.multicast.enabled: "false"
-        script.disable_dynamic: "true"
-        cloud.aws.region: "true"
-        cloud.node.auto_attributes: "true"
+        discovery.zen.ping.multicast.enabled: no
+        script.disable_dynamic: yes
+        cloud.aws.region: yes
+        cloud.node.auto_attributes: yes
         discovery.type: ec2
-        discovery.ec2.ping_timeout: "30s"
+        discovery.ec2.ping_timeout: 30s
         discovery.ec2.tag.Stack: services-dev-elasticsearch-v2
       sansible_elasticsearch_plugins:
         - plugin_name: mobz/elasticsearch-head
