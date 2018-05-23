@@ -11,6 +11,7 @@
         update_cache: yes
       with_items:
         - apt-transport-https
+        - lsb-release
         - net-tools
 
   roles:
@@ -20,3 +21,23 @@
         index.number_of_shards: 1
         index.number_of_replicas: 1
         script.groovy.sandbox.enabled: yes
+      sansible_elasticsearch_family: 1.x
+      sansible_elasticsearch_version: 1.7.5
+      sansible_elasticsearch_java_heap_size: 256
+      when: ansible_distribution_release == "trusty"
+
+    - role: elasticsearch
+      sansible_elasticsearch_additional_config:
+        bootstrap.mlockall: yes
+        index.number_of_shards: 1
+        index.number_of_replicas: 1
+        script.groovy.sandbox.enabled: yes
+      sansible_elasticsearch_family: 2.x
+      sansible_elasticsearch_version: 2.4.1
+      when: ansible_distribution_release == "xenial"
+
+    - role: elasticsearch
+      sansible_elasticsearch_family: 5.x
+      sansible_elasticsearch_plugins: []
+      sansible_elasticsearch_version: 5.6.8
+      when: ansible_distribution_release == "bionic"
