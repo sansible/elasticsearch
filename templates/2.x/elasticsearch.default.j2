@@ -17,4 +17,8 @@ ES_MIN_MEM={{ sansible_elasticsearch_java_heap_size }}
 ES_MAX_MEM={{ sansible_elasticsearch_java_heap_size }}
 ES_HEAP_SIZE={{ sansible_elasticsearch_java_heap_size }}m
 
+{% if sansible_elasticsearch_java_opts != None %}
+ES_JAVA_OPTS={{ sansible_elasticsearch_java_opts }}
+{% endif %}
+
 export ES_USE_IPV4=true

@@ -35,3 +35,11 @@
   service:
     name: elasticsearch
     enabled: yes
+  when: ansible_distribution_release != "bionic"
+
+- name: Create Elasticsearch startup links
+  become: yes
+  command: update-rc.d elasticsearch defaults
+  args:
+    creates: "/etc/rc0.d/K??elasticsearch"
+  when: ansible_distribution_release == "bionic"

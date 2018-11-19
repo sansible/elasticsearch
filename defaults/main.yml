@@ -8,6 +8,7 @@ sansible_elasticsearch_config_path_logs: /var/log/elasticsearch
 sansible_elasticsearch_family: 2.x
 sansible_elasticsearch_group: elasticsearch
 sansible_elasticsearch_java_heap_size: "{{ (ansible_memtotal_mb / 2) | int }}"
+sansible_elasticsearch_java_opts: ~
 sansible_elasticsearch_java_vendor: openjdk
 sansible_elasticsearch_java_version: 8
 sansible_elasticsearch_limits_nofile_hard: 65535
@@ -30,6 +31,7 @@ sansible_elasticsearch_s3_backup_base_path: snapshots
 sansible_elasticsearch_s3_backup_bucket: changeme
 sansible_elasticsearch_s3_backup_enabled: no
 sansible_elasticsearch_s3_backup_region: changeme
+sansible_elasticsearch_startup_timeout: ~
 sansible_elasticsearch_sysctl:
   - name: vm.max_map_count
     value: 262144
