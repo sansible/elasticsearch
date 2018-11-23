@@ -28,3 +28,12 @@
   environment:
     JAVA_HOME: /usr/share/java
   with_items: "{{ sansible_elasticsearch_plugins }}"
+
+- name: Set ElasticSearch Startup Timeout
+  become: yes
+  lineinfile:
+    path: /etc/init.d/elasticsearch
+    regexp: "timeout=10"
+    line: "                timeout={{ sansible_elasticsearch_startup_timeout }}"
+  notify: restart elasticsearch
+  when: sansible_elasticsearch_startup_timeout != None

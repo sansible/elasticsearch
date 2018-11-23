@@ -4,7 +4,11 @@ CONF_DIR={{ sansible_elasticsearch_paths_configuration }}
 DATA_DIR={{ sansible_elasticsearch_paths_data }}
 ES_GROUP={{ sansible_elasticsearch_group }}
 ES_HOME=/usr/share/elasticsearch
+{% if sansible_elasticsearch_java_opts != None %}
+ES_JAVA_OPTS="{{ sansible_elasticsearch_java_opts }} -Xms{{ sansible_elasticsearch_java_heap_size }}m -Xmx{{ sansible_elasticsearch_java_heap_size }}m"
+{% else %}
 ES_JAVA_OPTS="-Xms{{ sansible_elasticsearch_java_heap_size }}m -Xmx{{ sansible_elasticsearch_java_heap_size }}m"
+{% endif %}
 ES_STARTUP_SLEEP_TIME=5
 ES_USER={{ sansible_elasticsearch_user }}
 #JAVA_HOME=
