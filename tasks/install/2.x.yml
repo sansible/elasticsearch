@@ -3,7 +3,7 @@
 - name: Add Elastic gpg key
   become: yes
   apt_key:
-    url: https://packages.elastic.co/GPG-KEY-elasticsearch
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
     state: present
 
 - name: Install Elasticsearch repo
