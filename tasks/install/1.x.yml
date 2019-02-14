@@ -1,21 +1,15 @@
 ---
 
-- name: Add Elastic gpg key
+- name: Download Elasticsearch package
   become: yes
-  apt_key:
-    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
-    state: present
-
-- name: Install Elasticsearch repo (ansible >= 2.0)
-  become: yes
-  apt_repository:
-    repo: "deb http://packages.elasticsearch.org/elasticsearch/{{ sansible_elasticsearch_version | regex_replace('^([0-9]+\\.[0-9]+).*$', '\\1') }}/debian stable main"
-    state: present
+  get_url:
+    dest: "/usr/local/src/elasticsearch-{{ sansible_elasticsearch_version }}.deb"
+    url: "https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-{{ sansible_elasticsearch_version }}.deb"
 
 - name: Install Elasticsearch
   become: yes
   apt:
-    name: "elasticsearch={{ sansible_elasticsearch_version }}"
+    deb: "/usr/local/src/elasticsearch-{{ sansible_elasticsearch_version }}.deb"
     state: present
   notify: restart elasticsearch
 

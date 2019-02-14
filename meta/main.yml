@@ -1,16 +1,17 @@
 ---
 
 galaxy_info:
+  author: sansible
   description: "Install Elasticsearch."
   license: MIT
-  min_ansible_version: 2.2
+  min_ansible_version: 2.5
   platforms:
     - name: Ubuntu
       versions:
         - xenial
         - trusty
         - bionic
-  categories:
+  galaxy_tags:
     - development
 
 dependencies:

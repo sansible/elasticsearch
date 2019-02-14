@@ -21,7 +21,7 @@ To install run `ansible-galaxy install sansible.elasticsearch` or add this to yo
 
 ```YAML
 - name: sansible.elasticsearch
-  version: v2.0
+  version: v2.2.x
 ```
 
 and run `ansible-galaxy install -p ./roles -r roles.yml`
