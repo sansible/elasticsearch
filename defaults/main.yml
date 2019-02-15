@@ -14,6 +14,7 @@ sansible_elasticsearch_java_version: 8
 sansible_elasticsearch_limits_nofile_hard: 65535
 sansible_elasticsearch_limits_nofile_soft: 65535
 sansible_elasticsearch_limits_nproc: 32768
+sansible_elasticsearch_install_sni_fixes: yes
 sansible_elasticsearch_packages:
   - curl
   - dstat

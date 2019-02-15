@@ -8,6 +8,37 @@
   with_items: "{{ sansible_elasticsearch_packages }}"
   notify: restart elasticsearch
 
+- name: Install apt packages for SNI fix
+  become: yes
+  apt:
+    name:
+      - python-pip
+      - python-dev
+      - libffi-dev
+      - libssl-dev
+  when:
+    - ansible_python_version is version_compare('2.7.9', '<')
+    - sansible_elasticsearch_install_sni_fixes == true
+
+- name: Upgrade Pip for SNI fix
+  become: yes
+  pip:
+    name: pip>=18
+  when:
+    - ansible_python_version is version_compare('2.7.9', '<')
+    - sansible_elasticsearch_install_sni_fixes == true
+
+- name: Install Python packages for SNI fix
+  become: yes
+  pip:
+    name:
+      - pyopenssl>=18.0.0
+      - ndg-httpsclient>=0.5.1
+      - pyasn1>=0.4.5
+  when:
+    - ansible_python_version is version_compare('2.7.9', '<')
+    - sansible_elasticsearch_install_sni_fixes == true
+
 - name: Install 1.x Family
   include: install/1.x.yml
   when: sansible_elasticsearch_family == "1.x"
