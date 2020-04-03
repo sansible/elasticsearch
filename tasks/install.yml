@@ -17,16 +17,16 @@
       - libffi-dev
       - libssl-dev
   when:
-    - ansible_python_version is version_compare('2.7.9', '<')
-    - sansible_elasticsearch_install_sni_fixes == true
+    - ansible_python_version is version('2.7.9', '<')
+    - sansible_elasticsearch_install_sni_fixes
 
 - name: Upgrade Pip for SNI fix
   become: yes
   pip:
     name: pip>=18
   when:
-    - ansible_python_version is version_compare('2.7.9', '<')
-    - sansible_elasticsearch_install_sni_fixes == true
+    - ansible_python_version is version('2.7.9', '<')
+    - sansible_elasticsearch_install_sni_fixes
 
 - name: Install Python packages for SNI fix
   become: yes
@@ -36,8 +36,8 @@
       - ndg-httpsclient>=0.5.1
       - pyasn1>=0.4.5
   when:
-    - ansible_python_version is version_compare('2.7.9', '<')
-    - sansible_elasticsearch_install_sni_fixes == true
+    - ansible_python_version is version('2.7.9', '<')
+    - sansible_elasticsearch_install_sni_fixes
 
 - name: Install 1.x Family
   include: install/1.x.yml

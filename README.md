@@ -62,7 +62,7 @@ To install v5 with x-pack:
       sansible_elasticsearch_version: 5.0.0
 ```
 
-With AWS EC2 plugin:
+With the AWS EC2 plugin:
 
 ```YAML
 - name: Install and configure ElasticSearch
